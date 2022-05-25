@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// Clase usada como respuesta.
+/**
+ * Clase usada como respuesta al cliente.
+ * @author Pedro Gutiérrez
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

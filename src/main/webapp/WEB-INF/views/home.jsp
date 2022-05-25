@@ -27,6 +27,7 @@
 
 <!-- MAIN CSS -->
 <link rel="stylesheet" href="../assets/css/tooplate-gymso-style.css">
+<link rel="stylesheet" href="../assets/css/home.css">
 <link rel="stylesheet"
 	href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -45,7 +46,6 @@
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50"
 	id="top">
-
 	<!-- MENU BAR -->
 	<nav class="navbar navbar-expand-lg fixed-top">
 		<div class="container">
@@ -84,6 +84,10 @@
 						<h1 class="text-white" data-aos="fade-up" data-aos-delay="500">Programming
 							Exercise</h1>
 						<h6 data-aos="fade-up" data-aos-delay="300">For Dynae.tech</h6>
+
+						<a href="#requestSection" type="button" class="btn btn-danger mt-5 text-white" data-aos="fade-up" data-aos-delay="400">Consultar
+							Api</a>
+
 					</div>
 				</div>
 			</div>
@@ -98,7 +102,7 @@
 			</div>
 		</div>
 		<div class="container my-5" data-aos="fade-up">
-			<form class="needs-validation" novalidate>
+			<form class="needs-validation" id="form" novalidate>
 				<div class=form-row>
 					<div class="col-md-4">
 						<div class="form-group">
@@ -112,8 +116,8 @@
 									válida</div>
 							</div>
 							<div class="form-inline">
-								<input step="1" type="time" id="timeInicial" class="form-control"
-									required>
+								<input step="1" type="time" id="timeInicial"
+									class="form-control" required>
 								<div class="valid-feedback">Correcto!</div>
 								<div class="invalid-feedback">Debe ingresar una hora
 									válida</div>
@@ -130,7 +134,8 @@
 									válida</div>
 							</div>
 							<div class="form-inline">
-							<input step="1" type="time" id="timeFinal" class="form-control" required>
+								<input step="1" type="time" id="timeFinal" class="form-control"
+									required>
 								<div class="valid-feedback">Correcto!</div>
 								<div class="invalid-feedback">Debe ingresar una hora
 									válida</div>
@@ -150,7 +155,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button id="RequestBtn" type="button" class="btn btn-danger">Consultar</button>
+					<button disabled id="requestBtn" type="button"
+						class="btn btn-danger">Consultar</button>
 				</div>
 			</form>
 		</div>
@@ -163,10 +169,14 @@
 				Temperatura máxima: <span class="text-dark" id="writeMaxMagnitude"></span>
 			</h6>
 			<h6 class="mb-3 text-danger">
-				cantidad de segundos: <span class="text-dark" id="writeSeconds"></span>
+				Cantidad de segundos: <span class="text-dark" id="writeSeconds"></span>
 			</h6>
 		</div>
 	</section>
+
+	<div id="loading-screen" style="display: none">
+		<img src="../assets/images/spinning-circles.svg">
+	</div>
 
 	<!-- SCRIPTS -->
 	<script src="../assets/js/aos.js"></script>

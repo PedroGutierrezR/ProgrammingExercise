@@ -33,7 +33,7 @@ public class ConsumeApiServiceImplTest {
 		request.setDateFinal(LocalDate.of(2022,04,23));
 		request.setTimeInicial("04:00:00");
 		request.setTimeFinal("03:59:59");
-		request.setMagnitude(10);
+		request.setMagnitude(10.10);
 		
 		// When
 		Response response = underTest.getResponse(request);
@@ -45,19 +45,24 @@ public class ConsumeApiServiceImplTest {
 	@Test
 	void itShouldReturnANumber() {
 		// Given
-		Date date1 = new GregorianCalendar(2022, 04, 22, 4, 0, 0).getTime();
-		Date date2 = new GregorianCalendar(2022, 04, 23, 3, 59, 59).getTime();
+		Date date1 = new GregorianCalendar(2022, 04, 22, 0, 0, 10).getTime();
+		Date date2 = new GregorianCalendar(2022, 04, 22, 0,	0, 20).getTime();
+		Date date3 = new GregorianCalendar(2022, 04, 22, 0,  0, 30).getTime();
 		
 		ResponseFromApi responseFromApi = new ResponseFromApi();
 		responseFromApi.setTimestamp(date1);
-		responseFromApi.setMagnitude(10.0);
+		responseFromApi.setMagnitude(20.0);
 		ResponseFromApi responseFromApi2 = new ResponseFromApi();
-		responseFromApi2.setTimestamp(date2);
-		
+		responseFromApi2.setTimestamp(date2);	
 		responseFromApi2.setMagnitude(17.0);
+		ResponseFromApi responseFromApi3 = new ResponseFromApi();
+		responseFromApi3.setTimestamp(date3);	
+		responseFromApi3.setMagnitude(7.0);
+		
 		List<ResponseFromApi> dummyResponseFromApi = new ArrayList<ResponseFromApi>();
 		dummyResponseFromApi.add(responseFromApi);
 		dummyResponseFromApi.add(responseFromApi2);
+		dummyResponseFromApi.add(responseFromApi3);
 		
 		// When 
 		Double maxResult = ReturnMinAndMaxMagnitudeHelper.getMaxMagnitude(dummyResponseFromApi);
@@ -65,10 +70,12 @@ public class ConsumeApiServiceImplTest {
 		long seconds = ReturnSecondsHelper.getSeconds(dummyResponseFromApi, 9);
 		
 		// Then
-		assertThat(maxResult).isEqualTo(17.0);
-		assertThat(minResult).isEqualTo(10.0);
-		assertThat(seconds).isEqualTo(86399);
+		assertThat(maxResult).isEqualTo(20.0);
+		assertThat(minResult).isEqualTo(7.0);
+		assertThat(seconds).isEqualTo(20);
 		
 	}
+	
+	
 	
 }

@@ -1,16 +1,23 @@
 const writeMinMagnitude = document.querySelector("#writeMinMagnitude");
 const writeMaxMagnitude = document.querySelector("#writeMaxMagnitude");
 const writeSeconds = document.querySelector("#writeSeconds");
+const form = document.querySelector("#form");
+const requestBtn = document.querySelector("#requestBtn");
 
 $(document).ready(function() {
-	// Este evento va a escuchar el boton "Consultar del HTML"
-	$("#RequestBtn").click(function() {
+
+	// Llamada a función para desplegar un loading. (La función está al final)
+	let loader = $("#loading-screen");
+	configureLoadingScreen(loader);
+
+	// Este evento va a escuchar el boton "Consultar" del jsp.
+	$("#requestBtn").click(function() {
 
 		// Si está todo la validacion de cada input retorna true entonces se realiza la petición
 		if (isValid()) {
 
 			console.log("All right");
-
+			// Se agregan los valor al objeto inputData para ser enviado al backend.
 			let inputData = {
 				dateInicial: $("#dateInicial").val(),
 				timeInicial: $("#timeInicial").val(),
@@ -36,7 +43,7 @@ $(document).ready(function() {
 					if (data.maxMagnitude == null || data.minMagnitude == null) {
 						/*
 						Esta instrucción viene de sweetalert. 
-						Es importado de esta manera en el HTML -> <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+						Es importado de esta manera en el jsp -> <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 						*/
 						swal({
 							text: data.message,
@@ -45,8 +52,7 @@ $(document).ready(function() {
 						//return sin valor con la finalidad de terminar en ese momento la ejecución de la función.
 						return;
 					}
-
-					//Escribir datos desde la api al HTML. 
+					//Escribir datos que vienen desde la api al jsp. 
 					writeMinMagnitude.innerHTML = data.minMagnitude;
 					writeMaxMagnitude.innerHTML = data.maxMagnitude;
 					writeSeconds.innerHTML = data.seconds;
@@ -57,7 +63,7 @@ $(document).ready(function() {
 				})
 
 		} else {
-			console.log("nada");
+			console.log("nothing happening");
 		}
 
 	});
@@ -71,6 +77,16 @@ $(document).ready(function() {
 		var timeFinal = false;
 		var dateFinal = false;
 		var degrees = false;
+
+		if ($("#dateInicial").val().length == 0) {
+			$("#dateInicial").addClass("is-invalid");
+			$("#dateInicial").removeClass("is-valid");
+			dateInicial = false;
+		} else {
+			$("#dateInicial").removeClass("is-invalid");
+			$("#dateInicial").addClass("is-valid");
+			dateInicial = true;
+		}
 
 		if ($("#timeInicial").val().length == 0 || $("#timeInicial").val().length == 5) {
 			$("#timeInicial").addClass("is-invalid");
@@ -99,6 +115,7 @@ $(document).ready(function() {
 			$("#timeFinal").addClass("is-valid");
 			timeFinal = true;
 		}
+
 		if ($("#degrees").val().length == 0) {
 			$("#degrees").addClass("is-invalid");
 			$("#degrees").removeClass("is-valid");
@@ -109,7 +126,7 @@ $(document).ready(function() {
 			degrees = true;
 		}
 
-		if ($("#dateInicial").val().length == 0 || $("#dateInicial").val() > $("#dateFinal").val()) {
+		if ($("#dateInicial").val() > $("#dateFinal").val()) {
 
 			$("#dateInicial").addClass("is-invalid");
 			$("#dateInicial").removeClass("is-valid");
@@ -124,7 +141,7 @@ $(document).ready(function() {
 		} else if ($("#dateInicial").val() == $("#dateFinal").val() && $("#timeInicial").val() == $("#timeFinal").val()) {
 
 			swal({
-				text: "Al ser la misma fecha, al menos los segundos deben ser diferentes para obtener un resultado",
+				text: "Al ser la misma fecha, al menos los segundos deben ser diferentes",
 				icon: "error"
 			});
 
@@ -138,10 +155,18 @@ $(document).ready(function() {
 			$("#timeFinal").removeClass("is-valid");
 			timeFinal = false;
 
-		} else if ($("#dateInicial").val() == $("#dateFinal").val() && $("#timeInicial").val() != $("#timeFinal").val()) {
-			$("#dateInicial").removeClass("is-invalid");
-			$("#dateInicial").addClass("is-valid");
-			dateInicial = true;
+		} else if ($("#dateInicial").val() == $("#dateFinal").val() && $("#timeInicial").val() > $("#timeFinal").val()) {
+			swal({
+				text: "La hora inicial debe ser menor a la final",
+				icon: "error"
+			});
+
+			$("#timeInicial").addClass("is-invalid");
+			$("#timeInicial").removeClass("is-valid");
+			timeInicial = false;
+			$("#timeFinal").addClass("is-invalid");
+			$("#timeFinal").removeClass("is-valid");
+			timeFinal = false;
 		} else {
 			$("#dateInicial").removeClass("is-invalid");
 			$("#dateInicial").addClass("is-valid");
@@ -152,3 +177,38 @@ $(document).ready(function() {
 	}
 
 });
+
+function validar() {
+
+	let deshabilitar = false;
+
+	if ($("#dateInicial").val().length == 0) {
+		deshabilitar = true;
+	}
+	if ($("#timeInicial").val().length == 0) {
+		deshabilitar = true;
+	}
+	if ($("#dateFinal").val().length == 0) {
+		deshabilitar = true;
+	}
+	if ($("#timeFinal").val().length == 0) {
+		deshabilitar = true;
+	}
+	if ($("#degrees").val().length == 0) {
+		deshabilitar = true;
+	}
+	requestBtn.disabled = deshabilitar;
+}
+
+form.addEventListener('keyup', validar);
+
+// Función que despliega un loading mientras se espera la respuesta desde la Api.
+function configureLoadingScreen(loader) {
+	$(document)
+		.ajaxStart(function() {
+			loader.fadeIn();
+		})
+		.ajaxStop(function() {
+			loader.fadeOut();
+		})
+}

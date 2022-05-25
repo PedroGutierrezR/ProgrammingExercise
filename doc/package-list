@@ -1,0 +1,11 @@
+tech.dynae
+tech.dynae.app.controller
+tech.dynae.app.delegate
+tech.dynae.app.service
+tech.dynae.app.service.helpers
+tech.dynae.app.service.model
+tech.dynae.app.service.request
+tech.dynae.app.service.response
+tech.dynae.app.ws.rest.controller
+tech.dynae.config
+tech.dynae.service.impl

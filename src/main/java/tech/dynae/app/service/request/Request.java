@@ -5,7 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// Clase usada para recibir los datos ingresados en cada input del HTML.
+/**
+ * Clase usada para recibir los datos ingresados en cada input del jsp
+ * @author Pedro Gutiérrez
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

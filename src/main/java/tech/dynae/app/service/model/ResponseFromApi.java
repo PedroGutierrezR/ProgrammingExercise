@@ -6,9 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// Clase usada para recibir la respuesta de la Api. 
-// Solo se consideró los datos relevantes para realizar calculos: magnitude y timestamp.
-
+/**
+ * Clase usada para recibir la respuesta de la Api. 
+ * Solo se consideró los datos relevantes para realizar calculos: magnitude y timestamp.
+ * @author Pedro Gutiérrez
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
