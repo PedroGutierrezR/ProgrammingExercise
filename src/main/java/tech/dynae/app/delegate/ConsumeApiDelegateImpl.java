@@ -1,13 +1,13 @@
 package tech.dynae.app.delegate;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import tech.dynae.app.service.ConsumeApiService;
+import tech.dynae.app.service.request.Request;
 import tech.dynae.app.service.response.Response;
 
+// Esta clase solo tiene la responsabilidad de llamar al servicio apropiado.
 @Component("consumeApiDelegate")
 public class ConsumeApiDelegateImpl implements ConsumeApiDelegate {
 
@@ -15,8 +15,8 @@ public class ConsumeApiDelegateImpl implements ConsumeApiDelegate {
 	private ConsumeApiService consumeApiService;
 	
 	@Override
-	public List<Response> getResponse() {
-		return consumeApiService.getResponse();
+	public Response getResponse(Request request) {
+		return consumeApiService.getResponse(request);
 	}
 
 }
