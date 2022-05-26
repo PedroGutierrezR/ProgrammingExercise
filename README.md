@@ -7,7 +7,8 @@ Programming Exercise es un proyecto desarrollado en el contexto de una prueba t√
 ## Instalaci√≥n
 
 ##### 1 Paso
-1 forma. Dar clic en Code y luego en Donwload Zip 2 forma. Crear una carpeta, ingresar a git bash y ejecutar git clone https://github.com/PedroGutierrezR/ProgrammingExercise.git
+1 forma. Dar clic en Code y luego en Donwload Zip 
+2 forma. Crear una carpeta, ingresar a git bash y ejecutar git clone https://github.com/PedroGutierrezR/ProgrammingExercise.git
 ##### 2 Paso
 Importar proyecto clonado en tu IDE como maven project.
 ##### 3 Paso
